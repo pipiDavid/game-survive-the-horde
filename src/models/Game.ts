@@ -1,11 +1,10 @@
-import { Enemy } from "./Enemy"
-import { Item } from "./Item"
-import { Player } from "./Player"
-
-import promptSync from 'prompt-sync'
-const prompt = promptSync()
+import { Enemy } from "./enemy";
+import { Item } from "./item";
+import { Player } from "./player";
 
 
+
+const prompt = require('prompt-sync')();
 
 export class Game {
     player: Player | null
@@ -33,6 +32,7 @@ export class Game {
                 console.log('create Player')
                 const playerName: string = prompt('Enter player name: ')
                 this.player = new Player(playerName)
+                return this.showMenu()
                 break;
             case '2':
                 if (!this.player) {
@@ -53,10 +53,18 @@ export class Game {
 
     }
     startGame() {
-        console.log(`Welcome ${this.player?.name} to the game!`)
-        console.log('You have 10 round to defeat the enemies')
-        console.log('good Luck!')
+        console.log(`
+                🎮 WELCOME TO THE GAME SURVIVE THE HORDE 🎮
+                    YOU HAVE TO SURVIVE 10 ROUNDS
+                          GOOD LUCK HERO 🦸🏼‍♂️🦸🏼‍♂️🦸🏼
+                           `)
         this.enemy.push(Enemy.getRandomEnemy())
+        this.player.getPlayerInfo()
+        this.player.actionsMenu()
+        this.player.useItem()
+        
+
+
 
     }
     nextRound() {
@@ -68,5 +76,4 @@ export class Game {
 }
 
 const game = new Game()
-game.showMenu()
-
+game.showMenu()                             
