@@ -58,22 +58,29 @@ export class Game {
                     YOU HAVE TO SURVIVE 10 ROUNDS
                           GOOD LUCK HERO 🦸🏼‍♂️🦸🏼‍♂️🦸🏼
                            `)
-        this.enemy.push(Enemy.getRandomEnemy())
-        this.player.getPlayerInfo()
-        this.player.actionsMenu()
-        this.player.useItem()
-        
-
-
-
+        this.rounds()
     }
-    nextRound() {
-        console.log('Next round')
+    rounds() {
+        while (this.player.health > 0 && this.round < this.maxRounds) {
+            this.round++
+            console.log(`Round ${this.round}`)
+
+            this.enemy.push(Enemy.getRandomEnemy())
+            this.player.getPlayerInfo()
+            this.player.actionsMenu()
+            this.checkGameOver()
+
+            
+        }
     }
     checkGameOver() {
-        console.log('checking game over')
+        if (this.player.health <= 0) {
+            console.log('Game Over')
+            this.gameOver = true
+        } else if (this.player.health > 0 && this.round === this.maxRounds)
+            console.log('You WIN')
+        this.gameOver = true
     }
 }
-
 const game = new Game()
 game.showMenu()                             
