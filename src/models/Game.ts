@@ -67,10 +67,11 @@ export class Game {
 
             this.enemy.push(Enemy.getRandomEnemy())
             this.player.getPlayerInfo()
-            this.player.actionsMenu()
+            const currentEnemy = this.enemy[this.enemy.length - 1];
+            this.player.actionsMenu(currentEnemy);
             this.checkGameOver()
 
-            
+
         }
     }
     checkGameOver() {

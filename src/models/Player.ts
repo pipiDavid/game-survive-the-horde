@@ -1,4 +1,5 @@
 import { Item } from "./item"
+import { Enemy } from "./enemy";
 
 
 type ItemName = 'HealthPotion' | 'Shield' | 'AttackBoost' | 'EnergyDrink' | 'MagicScroll';
@@ -23,80 +24,87 @@ export class Player {
     }
     getPlayerInfo() {
         const item: ItemName[] = ['HealthPotion', 'Shield', 'AttackBoost', 'EnergyDrink', 'MagicScroll']
-        console.log(`Player: ${this.name}, Health: ${this.attack}, Attack: ${this.attack}, defense: ${this.defense}, Items: ${item.join(', ')} `)
+        console.log(`Player: ${this.name}, Health: ${this.health}, Attack: ${this.attack}, defense: ${this.defense}, Items: ${item.join(', ')} `)
 
     }
-    actionsMenu() {
-        console.log(`}
+    actionsMenu(enemy: Enemy) {
+        console.log(`
             What do you want to do in this round?
             1. Attack?
             2. Use defense?
             3. Use item?   
             `)
-        let validOption = false
-        while (!validOption) {
-            const option: string = prompt('Choose an option:')
-            switch (option) {
-                case '1':
-                    this.UseAttack()
-                    validOption = true
-                    break;
-                case '2':
-                    this.useDefense()
-                    validOption = true
-                    break;
-                case '3':
-                    this.useItem()
-                    validOption = true
-                    break;
-                default:
-                    console.log('Invalid option')
-
-                    break;
-            }
+        const option: string = prompt('Choose an option:')
+        switch (option) {
+            case '1':
+                this.UseAttack(enemy)
+                break;
+            case '2':
+                this.useDefense(enemy)
+                break;
+            case '3':
+                this.useItem()
+                break;
+            default:
+                console.log('Invalid option')
+                break;
+        }
+        enemy.randomAction(this)
+    }
+    UseAttack(enemy: Enemy) {
+        const damage = this.attack - enemy.defense
+        if(damage > 0) {
+            enemy.health -= damage
+            console.log(`${this.name} attacked ${enemy.name} and dealt ${damage} damage`)
+        } else {
+            console.log(`${this.name} attacked ${enemy.name} but it was not effective`)
         }
     }
-    UseAttack() {
-        console.log(`${this.name} attacked`)
-    }
-    useDefense() {
-        console.log(`${this.name} used ${this.defense} defense`)
+    useDefense(enemy: Enemy) {
+        const damage = enemy.attack - this.defense
+        if (damage > 0) {
+            this.health -= damage
+            console.log(`${this.name} used defense and took ${damage} damage`)
+        }
     }
     useItem() {
-        console.log(`
+            console.log(`
                 Options:
                 1. HealthPotion
                 2. Shield
                 3. AttackBoost
                 4. EnergyDrink
             `);
+    
+            const options: string = prompt('Choose an item:');
+            switch (options) {
+                case '1':
+                    this.health += 30; 
+                    console.log(`
+                          ${this.name} used HealthPotion and healed 30 health points ❤️❤️❤️
+                           -----------------------------------------------------------------
+                            Health: ${this.health} ❤️
+                          `)
 
-        const options: string = prompt('Choose an item:');
-        switch (options) {
-            case '1':
-                this.health += 30;
-                console.log(`${this.name} used HealthPotion and healed 30 health points ❤️❤️❤️`);
-                console.log('-------------------');
-                console.log(' Health: ', this.health, '❤️')
-                break;
-            case '2':
-                this.defense += 10;
-                console.log(`${this.name} used Shield and increased defense by 10 points 🛡️🛡️🛡️`);
-                break;
-            case '3':
-                this.attack += 10;
-                console.log(`${this.name} used AttackBoost and increased attack by 10 points ⚔️⚔️⚔️`);
-                break;
-            case '4':
-                this.health += 10;
-                this.attack += 5;
-                console.log(`${this.name} used EnergyDrink and increased health by 10 points and attack by 5 points 💪💪💪`);
-                break;
-            default:
-                console.log('Invalid Item');
-                break;
+                    break;
+                case '2':
+                    this.defense += 10; 
+                    console.log(`${this.name} used Shield and increased defense by 10 points 🛡️🛡️🛡️`);
+                    break;
+                case '3':
+                    this.attack += 10; 
+                    console.log(`${this.name} used AttackBoost and increased attack by 10 points ⚔️⚔️⚔️`);
+                    break;
+                case '4':
+                    this.health += 10; 
+                    this.attack += 5;
+                    console.log(`${this.name} used EnergyDrink and increased health by 10 points and attack by 5 points 💪💪💪`);
+                    break;
+                default:
+                    console.log('Invalid Item');
+                    break;
+            }
+            
         }
-
+    
     }
-
-}
