@@ -9,10 +9,9 @@ export class Item {
 
     constructor(name: ItemName) {
         this.name = name;
-        this.duration = Math.floor(Math.random() * 10) + 1;
     }
 
     getDescription() {
-        console.log(`Item: ${this.name}, Duration: ${this.duration} rounds`);
+        console.log(`Item: ${this.name}`);
     }
 }

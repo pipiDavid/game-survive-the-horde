@@ -2,6 +2,7 @@ import { Item } from "./item";
 import { Enemy } from "./enemy";
 
 import { useAttack, useDefense } from "../utils/combatUtils";
+import { useItem } from "../utils/itemsUtils";
 const prompt = require('prompt-sync')();
 
 export class Player {
@@ -40,7 +41,7 @@ export class Player {
                 useDefense(enemy, this);
                 break;
             case '3':
-                this.useItem()
+                useItem(this)
                 break;
             default:
                 console.log(' ❌ INVALID OPTION ❌');
