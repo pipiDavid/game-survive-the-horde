@@ -1,10 +1,12 @@
-import { Enemy } from "./enemy";
-import { Item } from "./item";
-import { Player } from "./player";
+import { Enemy } from "../models/enemy";
+import { Item } from "../models/item";
+import { Player } from "../models/player";
 
 
 
 const prompt = require('prompt-sync')();
+
+type ItemName = 'HealthPotion' | 'Shield' | 'AttackBoost' | 'EnergyDrink';
 
 export class Game {
     player: Player | null
@@ -70,6 +72,7 @@ export class Game {
             this.enemy.push(enemy)
             enemy.getEnemyInfo()
             this.player.getPlayerInfo()
+
 
 
             while (this.player.health > 0 && enemy.health > 0) {
